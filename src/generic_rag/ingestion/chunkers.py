@@ -33,6 +33,7 @@ class CharacterChunker(BaseChunker):
                     content=chunk_text,
                     start_char=start,
                     end_char=end,
+                    source=doc.source,
                     metadata=doc.metadata.copy()
                 )
                 chunks.append(chunk)

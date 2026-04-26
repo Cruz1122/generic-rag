@@ -54,6 +54,7 @@ class InMemoryVectorStore(BaseVectorStore):
                 start_char=chunk.start_char,
                 end_char=chunk.end_char,
                 token_count=chunk.token_count,
+                source=chunk.source,
                 metadata=chunk.metadata,
                 score=score
             ))

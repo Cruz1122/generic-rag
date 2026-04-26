@@ -29,6 +29,7 @@ class Chunk(BaseModel):
     start_char: int
     end_char: int
     token_count: Optional[int] = None
+    source: SourceRef
     metadata: Dict[str, Any] = Field(default_factory=dict)
 
 class ScoredChunk(Chunk):

@@ -37,6 +37,10 @@ cd generic-rag
 pip install -e .[dev]
 ```
 
+## Configuración
+
+Para detalles sobre cómo configurar proveedores (OpenAI, Ollama, Gemini) de forma segura usando variables de entorno y soporte para "structured output", revisa la [Guía de Configuración](docs/CONFIGURATION.md). También puedes revisar los ejemplos funcionales en la carpeta `examples/`.
+
 ## Ejemplo mínimo de uso
 
 Puedes ejecutar la demo funcional que corre en memoria sin necesidad de red:

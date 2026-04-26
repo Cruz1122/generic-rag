@@ -23,12 +23,16 @@ class GeminiProvider(BaseLLMProvider):
     def _map_error(self, exc: httpx.HTTPStatusError) -> Exception:
         status = exc.response.status_code
         if status in (401, 403):
-            return ProviderAuthError(f"Auth error ({status}): {exc}")
+            return ProviderAuthError(f"Auth error ({status}): {exc}", provider=self.name, status_code=status)
+        elif status in (408, 504):
+            return ProviderTimeoutError(f"Timeout error ({status}): {exc}", provider=self.name, status_code=status)
         elif status == 429:
-            return ProviderRateLimitError(f"Rate limit exceeded ({status}): {exc}")
+            return ProviderRateLimitError(f"Rate limit exceeded ({status}): {exc}", provider=self.name, status_code=status)
+        elif status in (400, 422):
+            return InvalidResponseError(f"Client error ({status}): {exc}", provider=self.name, raw_content=exc.response.text)
         elif status >= 500:
-            return ProviderError(f"Server error ({status}): {exc}")
-        return ProviderError(f"HTTP error ({status}): {exc}")
+            return ProviderError(f"Server error ({status}): {exc}", provider=self.name, status_code=status)
+        return ProviderError(f"HTTP error ({status}): {exc}", provider=self.name, status_code=status)
 
     def _prepare_payload(self, request: LLMRequest) -> Dict[str, Any]:
         contents = []
@@ -79,15 +83,15 @@ class GeminiProvider(BaseLLMProvider):
         except httpx.HTTPStatusError as e:
             raise self._map_error(e)
         except httpx.TimeoutException as e:
-            raise ProviderTimeoutError(f"Request timed out: {e}")
+            raise ProviderTimeoutError(f"Request timed out: {e}", provider=self.name)
         except httpx.RequestError as e:
-            raise ProviderError(f"Request failed: {e}")
+            raise ProviderError(f"Request failed: {e}", provider=self.name)
         except ValueError as e:
-            raise InvalidResponseError(f"Invalid JSON response: {e}")
+            raise InvalidResponseError(f"Invalid JSON response: {e}", provider=self.name)
 
         candidates = data.get("candidates", [])
         if not candidates:
-            raise InvalidResponseError("No candidates returned in response")
+            raise InvalidResponseError("No candidates returned in response", provider=self.name, raw_content=response.text if 'response' in locals() else None)
         
         content = candidates[0].get("content", {})
         parts = content.get("parts", [])

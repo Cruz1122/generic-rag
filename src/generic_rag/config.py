@@ -1,5 +1,5 @@
 from typing import Optional, Dict, Any
-from pydantic import BaseModel, ConfigDict, SecretStr
+from pydantic import BaseModel, ConfigDict, SecretStr, Field
 
 class ProviderConfig(BaseModel):
     model_config = ConfigDict(extra="forbid")
@@ -8,7 +8,10 @@ class ProviderConfig(BaseModel):
     base_url: Optional[str] = None
     default_model: str
     timeout_seconds: int = 30
-    extra_params: Dict[str, Any] = {}
+    max_retries: int = 3
+    retry_backoff_seconds: float = 2.0
+    extra_headers: Dict[str, str] = Field(default_factory=dict)
+    extra_params: Dict[str, Any] = Field(default_factory=dict)
 
 class EmbeddingConfig(BaseModel):
     model_config = ConfigDict(extra="forbid")

@@ -49,13 +49,21 @@ class OllamaProvider(BaseLLMProvider):
                 data = response.json()
         except httpx.HTTPStatusError as e:
             status = e.response.status_code
-            raise ProviderError(f"HTTP error ({status}): {e}")
+            if status in (401, 403):
+                raise ProviderAuthError(f"Auth error ({status}): {e}", provider=self.name, status_code=status)
+            elif status in (408, 504):
+                raise ProviderTimeoutError(f"Timeout error ({status}): {e}", provider=self.name, status_code=status)
+            elif status == 429:
+                raise ProviderRateLimitError(f"Rate limit exceeded ({status}): {e}", provider=self.name, status_code=status)
+            elif status in (400, 422):
+                raise InvalidResponseError(f"Client error ({status}): {e}", provider=self.name, raw_content=e.response.text)
+            raise ProviderError(f"HTTP error ({status}): {e}", provider=self.name, status_code=status)
         except httpx.TimeoutException as e:
-            raise ProviderTimeoutError(f"Request timed out: {e}")
+            raise ProviderTimeoutError(f"Request timed out: {e}", provider=self.name)
         except httpx.RequestError as e:
-            raise ProviderError(f"Request failed: {e}")
+            raise ProviderError(f"Request failed: {e}", provider=self.name)
         except ValueError as e:
-            raise InvalidResponseError(f"Invalid JSON response: {e}")
+            raise InvalidResponseError(f"Invalid JSON response: {e}", provider=self.name)
 
         message = data.get("message", {})
         text = message.get("content", "") or ""

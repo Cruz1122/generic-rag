@@ -87,38 +87,18 @@
 - Reranking guide and examples.
 
 ## Planned
-
 ### v0.9.0 — Evaluation & Quality Harness
 
-Goal: add deterministic, offline evaluation tools so retrieval, reranking, citations, and context quality can be measured instead of guessed.
+- Deterministic, offline evaluation tools for retrieval, reranking, citations, and context quality.
+- JSON/JSONL dataset formats for small benchmark datasets.
+- Retrieval metrics (Recall@k, Precision@k, MRR).
+- Reranking metrics (nDCG@k, MRR).
+- Citation and Context coverage checks.
+- Materialized predictions support.
+- CLI command: `generic-rag eval retrieval`.
+- Example evaluation demo and `docs/EVALUATION.md`.
 
-Candidate scope:
-
-- Evaluation schemas for small benchmark datasets.
-- JSON/JSONL dataset format.
-- Retrieval metrics:
-  - Recall @k
-  - Precision @k
-  - MRR
-- Reranking metrics:
-  - MRR
-  - nDCG @k
-- Citation coverage checks.
-- Context coverage checks.
-- Offline evaluation runner.
-- Example mini benchmark.
-- `docs/EVALUATION.md`.
-- Optional CLI command:
-  - `generic-rag eval retrieval <dataset>`
-  - only if it stays small and deterministic.
-
-Explicitly out of scope:
-
-- LLM-as-a-judge.
-- Paid/provider-based evaluation.
-- Hosted dashboards.
-- Experiment tracking services.
-- Auto-generated datasets.
+## Planned
 
 ### v1.0.0 — API Stabilization
 

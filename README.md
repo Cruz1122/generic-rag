@@ -8,12 +8,12 @@
 ![HTTPX](https://img.shields.io/badge/HTTPX-enabled-0B5FFF)
 ![Tests](https://img.shields.io/badge/tests-pytest-0A9EDC?logo=pytest&logoColor=white)
 ![Typing](https://img.shields.io/badge/typing-py.typed-blue)
-![Status](https://img.shields.io/badge/status-v0.8.0-green)
+![Status](https://img.shields.io/badge/status-v0.9.0-green)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
 ## What is generic-rag?
 
-`generic-rag` is a pure library of interfaces, Pydantic models, and contracts designed to build RAG pipelines and consume Large Language Models (OpenAI, Gemini, Groq, Ollama, etc.) **without coupling** to business rules, domain logic, or web frameworks (like FastAPI). It includes a lightweight **CLI** for diagnostics and local testing.
+`generic-rag` is a pure library of interfaces, Pydantic models, and contracts designed to build RAG pipelines and consume Large Language Models (OpenAI, Gemini, Groq, Ollama, etc.) **without coupling** to business rules, domain logic, or web frameworks (like FastAPI). It includes a lightweight **CLI** for diagnostics, local testing and evaluation.
 
 ## What it is NOT
 
@@ -35,16 +35,17 @@
 - **Chunking**: `CharacterChunker` with overlap support.
 - **Reranking**: `BaseReranker` contract with `DeterministicReranker` and optional `CrossEncoderReranker`.
 - **Storage & Retrieval**: `InMemoryVectorStore` (default) and **Qdrant** (optional) support.
+- **Evaluation**: Deterministic, offline quality harness for retrieval and reranking.
 - **Pipeline**: `DefaultQAPipeline` orchestrating retrieval, reranking, context injection, and LLM dispatching.
 
-## Current status: v0.8.0
+## Current status: v0.9.0
 
-We are currently at version **0.8.0**, which includes:
-- **Reranking Support**: New optional reranking layer for RAG pipelines.
+We are currently at version **0.9.0**, which includes:
+- **Evaluation & Quality Harness**: New offline framework to measure RAG performance (Precision@k, Recall@k, HitRate, MRR, nDCG) using materialized predictions.
+- **CLI Eval**: New `eval retrieval` command to evaluate performance from the command line.
+- **Reranking Support**: Optional reranking layer for RAG pipelines.
 - **Deterministic Reranker**: Lightweight keyword-based reordering for tests and demos.
 - **Cross-Encoder Reranker**: Optional semantic reranking using `sentence-transformers` via `[rerankers]` extra.
-- **Pipeline Integration**: `DefaultQAPipeline` now supports optional rerankers.
-- **CLI**: Diagnostic (`doctor`), file inspection (`inspect`), and offline demo tools.
 
 ## Installation
 

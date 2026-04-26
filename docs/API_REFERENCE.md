@@ -1,6 +1,6 @@
 # API Reference
 
-This is a high-level reference for the core components and schemas of `generic-rag` v0.8.0.
+This is a high-level reference for the core components and schemas of `generic-rag` v0.9.0.
  For deep implementation details, please inspect the `src/generic_rag/` source code.
 
 ## Core Schemas (`generic_rag.core.schemas`)
@@ -65,3 +65,12 @@ All exceptions inherit from `GenericRagError`. The LLM layer specifically throws
 - **Chunking**: `CharacterChunker`.
 - **Retrieval**: `SimpleRetriever`.
 - **Reranking**: `DeterministicReranker`, `CrossEncoderReranker` (optional).
+
+## Evaluation (generic_rag.evaluation)
+
+- **\EvaluationDataset\**: Holds a collection of \EvaluationExample\.
+- **\EvaluationExample\**: A single query with its \elevant_chunk_ids\.
+- **\RetrievedItem\**: A single prediction entry (\chunk_id\, \score\).
+- **\EvaluationReport\**: The final result containing aggregate metrics.
+- **\evaluate_retrieval\**: Main function to calculate metrics from materialized predictions.
+

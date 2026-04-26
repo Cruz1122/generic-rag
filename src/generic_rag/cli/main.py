@@ -7,6 +7,7 @@ from generic_rag.cli.commands.doctor import doctor_handler
 from generic_rag.cli.commands.demo import demo_handler
 from generic_rag.cli.commands.inspect import inspect_handler
 from generic_rag.cli.commands.provider import provider_handler
+from generic_rag.cli.commands.eval import eval_retrieval_handler
 
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
@@ -41,6 +42,14 @@ def main(argv: Sequence[str] | None = None) -> int:
     provider_subparsers = provider_parser.add_subparsers(dest="provider_command", help="Provider utilities")
     provider_subparsers.add_parser("check-env", help="Check environment variables for providers")
 
+    # Eval command
+    eval_parser = subparsers.add_parser("eval", help="Evaluation utilities")
+    eval_subparsers = eval_parser.add_subparsers(dest="eval_command", help="Evaluation types")
+    retrieval_eval_parser = eval_subparsers.add_parser("retrieval", help="Evaluate retrieval performance")
+    retrieval_eval_parser.add_argument("dataset", help="Path to evaluation dataset (JSON/JSONL)")
+    retrieval_eval_parser.add_argument("predictions", help="Path to predictions file (JSON)")
+    retrieval_eval_parser.add_argument("--k", default="1,3,5,10", help="Comma-separated list of k values for metrics")
+
     args = parser.parse_args(argv)
 
     if args.version:
@@ -68,6 +77,12 @@ def main(argv: Sequence[str] | None = None) -> int:
             return provider_handler()
         else:
             provider_parser.print_help()
+            return 1
+    elif args.command == "eval":
+        if args.eval_command == "retrieval":
+            return eval_retrieval_handler(args)
+        else:
+            eval_parser.print_help()
             return 1
 
     parser.print_help()

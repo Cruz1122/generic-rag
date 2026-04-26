@@ -25,3 +25,13 @@
 - Added `generic-rag` CLI command.
 - Diagnostic and inspection tools.
 - Offline demo mode.
+
+## v0.9.0 — Evaluation & Quality Harness (2026-04-26)
+
+- **Deterministic Evaluation**: New offline framework to measure RAG performance.
+- **Metrics**: Precision@k, Recall@k, HitRate@k, MRR, nDCG@k, Citation Coverage, Context Coverage.
+- **Materialized Predictions**: Evaluate results without running live pipelines or LLMs.
+- **Dataset Formats**: Support for JSON and JSONL benchmark datasets.
+- **CLI Utilities**: New \generic-rag eval retrieval\ command.
+- **Documentation**: Comprehensive evaluation guide in \docs/EVALUATION.md\.
+

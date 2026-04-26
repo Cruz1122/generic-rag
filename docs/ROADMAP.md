@@ -1,29 +1,35 @@
-# Roadmap de generic-rag
+# Roadmap for generic-rag
 
-### v0.1: Core Contracts & In-Memory Pipeline (Completado)
-- Modelos Pydantic v2 y jerarquía de excepciones.
-- Interfaces base para todo el ecosistema.
-- Proveedores LLM asíncronos ligeros (OpenAI-compatible, Ollama, Gemini).
-- Ingestión básica (TXT, MD) y chunking por caracteres.
-- Almacenamiento en memoria con similitud coseno.
-- Embedding determinístico para pruebas.
-- QA Pipeline con Context Builder en XML.
-- Extensiva suite de tests y ejemplos sin dependencias pesadas.
+### v0.1: Core Contracts & In-Memory Pipeline (Completed)
+- Pydantic v2 models and exception hierarchy.
+- Base interfaces for the entire ecosystem.
+- Lightweight async LLM providers (OpenAI-compatible, Ollama, Gemini).
+- Basic ingestion (TXT, MD) and character chunking.
+- In-memory storage with cosine similarity.
+- Deterministic embedding for testing.
+- QA Pipeline with XML Context Builder.
+- Extensive test suite and examples without heavy dependencies.
 
-### v0.2: Providers Estables
-- Soporte completo para streaming (`AsyncIterator[str]`) en todos los LLM providers.
-- Manejo mejorado de retries con exponential backoff a nivel Dispatcher.
+### v0.2: LLM Provider Hardening (Completed)
+- Robust error mapping (Auth, Timeout, RateLimit, InvalidResponse).
+- Lightweight retry logic with exponential backoff at the Dispatcher level.
+- Structured output support (`json_object` and `json_schema` formatting).
+- Offline provider documentation, setup guides, and practical examples.
 
-### v0.3: Loaders Opcionales (Extras)
+### v0.3: Real Embeddings & CLI Prototype (Planned)
+- Support for real embeddings as optional extras (e.g., OpenAI embeddings API, local `sentence-transformers`).
+- Better corpus tooling and management.
+- Optional CLI prototype for fast experimentation.
+
+### v0.4: Production Vector Stores (Planned)
+- `generic-rag[chroma]`: Integration with ChromaDB.
+- `generic-rag[qdrant]`: Integration with Qdrant.
+- `generic-rag[faiss]`: Integration with FAISS.
+
+### v0.5: Advanced Loaders (Planned)
 - `generic-rag[pdf]`: PyMuPDFLoader.
 - `generic-rag[html]`: BeautifulSoup HTML Loader.
 
-### v0.4: Vector Stores Opcionales
-- `generic-rag[chroma]`: Integración con ChromaDB.
-- `generic-rag[qdrant]`: Integración con Qdrant.
-
-### v0.5: Embeddings Reales Opcionales
-- `generic-rag[embeddings]`: Soporte para `sentence-transformers` locales y APIs de embeddings (OpenAI, Voyage).
-
-### v0.6: Adapter Examples
-- Más ejemplos de integración y Rerankers (CrossEncoders).
+### v0.6: Adapter Examples (Planned)
+- More examples demonstrating integration into larger domains (Adapters).
+- Rerankers (CrossEncoders) integration for better retrieval scoring.

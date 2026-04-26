@@ -8,7 +8,7 @@
 ![HTTPX](https://img.shields.io/badge/HTTPX-enabled-0B5FFF)
 ![Tests](https://img.shields.io/badge/tests-pytest-0A9EDC?logo=pytest&logoColor=white)
 ![Typing](https://img.shields.io/badge/typing-py.typed-blue)
-![Status](https://img.shields.io/badge/status-v0.3-yellow)
+![Status](https://img.shields.io/badge/status-v0.4-green)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
 ## What is generic-rag?
@@ -17,7 +17,6 @@
 
 ## What it is NOT
 
-- It does not include heavy, production-ready VectorStores (ChromaDB, FAISS, Qdrant) by default (planned for future optional extensions).
 - It does not include heavy document loaders (PyMuPDF, OCR) by default.
 - It does not use heavy semantic embeddings (like Sentence Transformers) out of the box.
 - It does not rely on bloated SDKs (LangChain, LlamaIndex).
@@ -32,18 +31,18 @@
 - **Structured Output**: Native support for JSON modes and schema enforcement across providers.
 - **Ingestion**: Pure `TextDocumentLoader` and `MarkdownDocumentLoader`.
 - **Chunking**: `CharacterChunker` with overlap support.
-- **Storage & Retrieval**: `InMemoryVectorStore` with pure Python cosine similarity, and an agnostic `SimpleRetriever`.
+- **Storage & Retrieval**: `InMemoryVectorStore` (default) and **Qdrant** (optional) support.
 - **Pipeline**: `DefaultQAPipeline` orchestrating retrieval, context injection, and LLM dispatching.
 
-## Current status: v0.3
+## Current status: v0.4
 
-We are currently at version **0.3**, which includes:
+We are currently at version **0.4**, which includes:
+- **Qdrant Integration**: First external vector store support as an optional extra (`[qdrant]`).
 - Optional real semantic embeddings (`OpenAICompatibleEmbeddingProvider`).
 - Hardened LLM provider layer with `max_retries` and strict HTTP error mapping.
 - Support for structured output (JSON schema/object).
-- Configurable `ProviderConfig` supporting secure `SecretStr` management.
-- Full suite of passing offline tests (45/45).
-- Real-world provider examples (Ollama, OpenAI-compatible).
+- Full suite of passing offline tests.
+- Real-world provider examples (Ollama, OpenAI-compatible, Qdrant).
 
 ## Installation
 

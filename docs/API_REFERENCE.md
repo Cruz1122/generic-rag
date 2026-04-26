@@ -1,6 +1,7 @@
 # API Reference
 
-This is a high-level reference for the core components and schemas of `generic-rag` v0.2. For deep implementation details, please inspect the `src/generic_rag/` source code.
+This is a high-level reference for the core components and schemas of `generic-rag` v0.4.
+ For deep implementation details, please inspect the `src/generic_rag/` source code.
 
 ## Core Schemas (`generic_rag.core.schemas`)
 
@@ -53,6 +54,6 @@ All exceptions inherit from `GenericRagError`. The LLM layer specifically throws
 
 - **Providers**: `OpenAICompatibleProvider`, `OllamaProvider`, `GeminiProvider`.
 - **Dispatcher**: `DefaultLLMDispatcher` (handles transient retries automatically).
-- **Storage**: `InMemoryVectorStore` (uses pure Python cosine similarity).
+- **Storage**: `InMemoryVectorStore` and `QdrantVectorStore` (via `[qdrant]` extra).
 - **Chunking**: `CharacterChunker`.
 - **Retrieval**: `SimpleRetriever`.

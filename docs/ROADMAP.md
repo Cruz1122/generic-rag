@@ -20,10 +20,10 @@
 - Support for real embeddings as optional extras (e.g., OpenAI embeddings API via `OpenAICompatibleEmbeddingProvider`).
 - `sentence-transformers` deferred to future sub-phase.
 
-### v0.4: Production Vector Stores (Planned)
-- `generic-rag[chroma]`: Integration with ChromaDB.
-- `generic-rag[qdrant]`: Integration with Qdrant.
-- `generic-rag[faiss]`: Integration with FAISS.
+### v0.4: Production Vector Stores (In Progress)
+- [x] `generic-rag[qdrant]`: Integration with Qdrant.
+- [ ] `generic-rag[chroma]`: Integration with ChromaDB.
+- [ ] `generic-rag[faiss]`: Integration with FAISS.
 
 ### v0.5: Advanced Loaders (Planned)
 - `generic-rag[pdf]`: PyMuPDFLoader.

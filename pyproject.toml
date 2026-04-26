@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "generic-rag"
-version = "0.3.0"
+version = "0.4.0"
 description = "Agnostic RAG and LLM orchestration library"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -15,6 +15,7 @@ dependencies = [
 
 [project.optional-dependencies]
 embeddings-openai = []
+qdrant = ["qdrant-client>=1.8.0"]
 dev = [
     "pytest>=7.0",
     "pytest-asyncio",

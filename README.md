@@ -8,7 +8,7 @@
 ![HTTPX](https://img.shields.io/badge/HTTPX-enabled-0B5FFF)
 ![Tests](https://img.shields.io/badge/tests-pytest-0A9EDC?logo=pytest&logoColor=white)
 ![Typing](https://img.shields.io/badge/typing-py.typed-blue)
-![Status](https://img.shields.io/badge/status-v0.5-green)
+![Status](https://img.shields.io/badge/status-v0.6.0-green)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
 ## What is generic-rag?
@@ -27,6 +27,7 @@
 - Strict Pydantic (v2) contracts for LLMs, Embeddings, Documents, and Chunks.
 - Abstract base interfaces for Providers, Dispatchers, Retrievers, ContextBuilders, and VectorStores.
 - **LLM Providers**: Asynchronous implementations based on `httpx` for OpenAI-compatible (Groq, LMStudio, vLLM), Ollama, and Gemini REST API.
+- **Integration Adapters**: Clean patterns to connect your app (FastAPI, Service Layer) without core contamination. See [ADAPTERS.md](docs/ADAPTERS.md).
 - **Dispatcher**: Built-in lightweight retry logic and error mapping.
 - **Structured Output**: Native support for JSON modes and schema enforcement across providers.
 - **Ingestion**: Pure `TextDocumentLoader` and `MarkdownDocumentLoader`. Optional `PyMuPDFDocumentLoader` (`[pdf]`) and `HTMLDocumentLoader` (`[html]`).
@@ -34,16 +35,16 @@
 - **Storage & Retrieval**: `InMemoryVectorStore` (default) and **Qdrant** (optional) support.
 - **Pipeline**: `DefaultQAPipeline` orchestrating retrieval, context injection, and LLM dispatching.
 
-## Current status: v0.5
+## Current status: v0.6.0
 
-We are currently at version **0.5**, which includes:
+We are currently at version **0.6.0**, which includes:
+- **Integration Adapters**: Formalized patterns for connecting generic-rag to applications (FastAPI, Service Layer, DTO mapping).
+- **FastAPI Support**: Optional extra `[fastapi]` for easy web API integration.
 - **Optional PDF/HTML Loaders**: Lightweight extraction using PyMuPDF and BeautifulSoup via optional extras.
-- **Qdrant Integration**: First external vector store support as an optional extra (`[qdrant]`).
-- Optional real semantic embeddings (`OpenAICompatibleEmbeddingProvider`).
+- **Qdrant Integration**: External vector store support (`[qdrant]`).
 - Hardened LLM provider layer with `max_retries` and strict HTTP error mapping.
 - Support for structured output (JSON schema/object).
-- Full suite of passing offline tests.
-- Real-world provider examples (Ollama, OpenAI-compatible, Qdrant).
+- Full suite of **74 passing offline tests** including adapter examples.
 
 ## Installation
 

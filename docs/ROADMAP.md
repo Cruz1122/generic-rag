@@ -1,55 +1,181 @@
-# Roadmap for generic-rag
+# Roadmap
 
-### v0.1.0: Core Contracts & In-Memory Pipeline (Completed)
-- Pydantic v2 models and exception hierarchy.
-- Base interfaces for the entire ecosystem.
-- Lightweight async LLM providers (OpenAI-compatible, Ollama, Gemini).
-- Basic ingestion (TXT, MD) and character chunking.
-- In-memory storage with cosine similarity.
-- Deterministic embedding for testing.
-- QA Pipeline with XML Context Builder.
-- Extensive test suite and examples without heavy dependencies.
+`generic-rag` evolves through small, focused releases. The project prioritizes a lightweight core, strict typing, offline tests, optional integrations, and clear boundaries between reusable RAG infrastructure and application-specific adapters.
 
-### v0.2.0: LLM Provider Hardening (Completed)
-- Robust error mapping (Auth, Timeout, RateLimit, InvalidResponse).
-- Lightweight retry logic with exponential backoff at the Dispatcher level.
-- Structured output support (`json_object` and `json_schema` formatting).
-- Offline provider documentation, setup guides, and practical examples.
+## Completed
 
-### v0.3.0: OpenAI-Compatible Embeddings (Completed)
-- Support for real embeddings as optional extras (OpenAI embeddings API).
-- `OpenAICompatibleEmbeddingProvider` implementation.
+### v0.1.0 — Core Contracts & In-Memory Pipeline
 
-### v0.4.0: Optional Qdrant Vector Store (Completed)
-- `generic-rag[qdrant]`: Integration with Qdrant vector database.
-- Production-ready storage interface.
+- Pydantic v2 schemas and exception hierarchy.
+- Base interfaces for LLMs, embeddings, document loaders, chunkers, vector stores, retrievers, context builders, and pipelines.
+- TXT/MD loaders.
+- Character-based chunking.
+- Deterministic embedding provider for tests and demos.
+- In-memory vector store.
+- Simple retriever.
+- XML context builder.
+- Default QA pipeline.
+- Offline demo and initial documentation.
 
-### v0.5.0: Optional PDF and HTML Loaders (Completed)
-- `generic-rag[pdf]`: PyMuPDF-based Document Loader.
-- `generic-rag[html]`: BeautifulSoup4-based HTML Loader.
+### v0.2.0 — LLM Provider Hardening
 
-### v0.6.0: Adapter Examples & Integration Patterns (Completed)
-- **Adapter Examples**: Formalized patterns for connecting generic-rag to applications (FastAPI, Service Layer).
-- **FastAPI Support**: Optional extra `[fastapi]` for easy web API integration.
-- **Integration Guide**: `docs/ADAPTERS.md`.
+- OpenAI-compatible provider.
+- Ollama provider.
+- Gemini REST provider.
+- Provider configuration hardening.
+- HTTP error mapping.
+- Retry handling.
+- Structured output support.
+- Provider examples and configuration docs.
 
-### v0.7.0: CLI & Diagnostic Tools (Completed)
-- Lightweight `argparse` based CLI (`generic-rag` command).
-- `doctor` command for dependency diagnostics.
-- `inspect` command for document loader testing.
-- `demo offline` for zero-config pipeline validation.
-- `provider check-env` for security-aware configuration checking.
+### v0.3.0 — OpenAI-Compatible Embeddings
 
-### v0.8.0: Optional Rerankers (Completed)
-- `BaseReranker` contract and `DeterministicReranker`.
-- `CrossEncoderReranker` via `sentence-transformers` as optional extra.
-- Integration into `DefaultQAPipeline`.
+- Optional OpenAI-compatible embedding provider.
+- Safe environment-based configuration.
+- Offline tests with mocked HTTP calls.
+- Embeddings guide.
+- Deterministic embeddings preserved for tests and demos.
 
-### v0.9.0: Hybrid Search & Advanced Retrieval (Planned)
-- Hybrid search (BM25 + Vector) support.
-- Additional optional vector stores (Chroma, FAISS).
+### v0.4.0 — Optional Qdrant Vector Store
 
-### v1.0.0: API Stabilization (Planned)
-- Final contract review.
-- Comprehensive API documentation.
-- Long-term support (LTS) release.
+- Optional `qdrant` extra.
+- `QdrantVectorStore`.
+- Deterministic UUIDv5 point IDs.
+- Chunk payload preservation.
+- Simple exact-match filters.
+- Offline unit tests with mocks.
+- Qdrant documentation and example.
+
+### v0.5.0 — Optional PDF and HTML Loaders
+
+- Optional `pdf` extra with `PyMuPDFDocumentLoader`.
+- Optional `html` extra with `HTMLDocumentLoader`.
+- PDF page-level documents.
+- HTML text extraction without remote fetching.
+- Explicit no-OCR and no-crawling scope.
+- Document loader docs and examples.
+
+### v0.6.0 — Adapter Examples & Integration Patterns
+
+- Simple adapter example.
+- Service-layer adapter example.
+- Optional FastAPI adapter example.
+- `fastapi` extra without `uvicorn`.
+- Offline tests for adapter examples.
+- Adapter architecture guide.
+
+### v0.7.0 — Lightweight CLI
+
+- `generic-rag` console entry point.
+- `doctor` command.
+- `demo offline` command.
+- `inspect file` command.
+- `provider check-env` command.
+- No Typer, Click, or Rich dependency.
+- Offline CLI tests.
+- CLI documentation.
+
+### v0.8.0 — Optional Reranking Support
+
+- `BaseReranker`.
+- `DeterministicReranker`.
+- Optional `CrossEncoderReranker`.
+- Optional `rerankers` extra with `sentence-transformers`.
+- `DefaultQAPipeline` support for optional reranker injection.
+- Retrieval and rerank score preservation.
+- Offline tests with mocked CrossEncoder.
+- Reranking guide and examples.
+
+## Planned
+
+### v0.9.0 — Evaluation & Quality Harness
+
+Goal: add deterministic, offline evaluation tools so retrieval, reranking, citations, and context quality can be measured instead of guessed.
+
+Candidate scope:
+
+- Evaluation schemas for small benchmark datasets.
+- JSON/JSONL dataset format.
+- Retrieval metrics:
+  - Recall @k
+  - Precision @k
+  - MRR
+- Reranking metrics:
+  - MRR
+  - nDCG @k
+- Citation coverage checks.
+- Context coverage checks.
+- Offline evaluation runner.
+- Example mini benchmark.
+- `docs/EVALUATION.md`.
+- Optional CLI command:
+  - `generic-rag eval retrieval <dataset>`
+  - only if it stays small and deterministic.
+
+Explicitly out of scope:
+
+- LLM-as-a-judge.
+- Paid/provider-based evaluation.
+- Hosted dashboards.
+- Experiment tracking services.
+- Auto-generated datasets.
+
+### v1.0.0 — API Stabilization
+
+Goal: freeze the public contracts enough for real consumers.
+
+Candidate scope:
+
+- Review public schemas.
+- Review base interfaces.
+- Review pipeline constructor signatures.
+- Review exception hierarchy.
+- Review optional extras naming.
+- Review import paths.
+- Review CLI command stability.
+- Add `CHANGELOG.md`.
+- Add `CONTRIBUTING.md`.
+- Add compatibility policy.
+- Add GitHub Actions CI.
+- Audit README and docs for outdated claims.
+- Define what counts as a breaking change.
+
+Explicitly out of scope:
+
+- New vector stores.
+- New model providers.
+- New document formats.
+- Major pipeline rewrites.
+
+### v1.1.0 — Additional Optional Vector Stores
+
+Goal: expand backend support only after public APIs and evaluation tools are stable.
+
+Candidates:
+
+- `ChromaVectorStore` via optional `chroma` extra.
+- `FAISSVectorStore` via optional `faiss` extra.
+
+Rules:
+
+- No vector store dependency in base install.
+- Each backend must implement existing vector store contracts.
+- Tests must not require external services by default.
+- Integration tests must be explicitly marked.
+- Documentation must compare tradeoffs against `InMemoryVectorStore` and `QdrantVectorStore`.
+
+### v1.2.0 — Advanced Retrieval Patterns
+
+Candidate scope:
+
+- Hybrid retrieval composition.
+- Multi-retriever fusion.
+- Score normalization utilities.
+- Query expansion hooks.
+- Optional BM25 sparse retrieval.
+
+Explicitly out of scope until then:
+
+- Agentic RAG.
+- Autonomous planning.
+- Multi-step web research.

@@ -8,7 +8,7 @@
 ![HTTPX](https://img.shields.io/badge/HTTPX-enabled-0B5FFF)
 ![Tests](https://img.shields.io/badge/tests-pytest-0A9EDC?logo=pytest&logoColor=white)
 ![Typing](https://img.shields.io/badge/typing-py.typed-blue)
-![Status](https://img.shields.io/badge/status-v0.2-yellow)
+![Status](https://img.shields.io/badge/status-v0.3-yellow)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
 ## What is generic-rag?
@@ -35,13 +35,14 @@
 - **Storage & Retrieval**: `InMemoryVectorStore` with pure Python cosine similarity, and an agnostic `SimpleRetriever`.
 - **Pipeline**: `DefaultQAPipeline` orchestrating retrieval, context injection, and LLM dispatching.
 
-## Current status: v0.2
+## Current status: v0.3
 
-We are currently at version **0.2**, which includes:
+We are currently at version **0.3**, which includes:
+- Optional real semantic embeddings (`OpenAICompatibleEmbeddingProvider`).
 - Hardened LLM provider layer with `max_retries` and strict HTTP error mapping.
 - Support for structured output (JSON schema/object).
 - Configurable `ProviderConfig` supporting secure `SecretStr` management.
-- Full suite of passing offline tests (37/37).
+- Full suite of passing offline tests (45/45).
 - Real-world provider examples (Ollama, OpenAI-compatible).
 
 ## Installation
@@ -50,7 +51,7 @@ See our [Getting Started Guide](docs/GETTING_STARTED.md) for detailed instructio
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-org/generic-rag.git
+git clone https://github.com/Cruz1122/generic-rag.git
 cd generic-rag
 
 # Install in editable mode with development dependencies
@@ -136,4 +137,3 @@ Having issues? See our [Troubleshooting Guide](docs/TROUBLESHOOTING.md) for comm
 ## License
 
 MIT License
-Placeholder)

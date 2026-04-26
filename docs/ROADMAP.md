@@ -16,10 +16,9 @@
 - Structured output support (`json_object` and `json_schema` formatting).
 - Offline provider documentation, setup guides, and practical examples.
 
-### v0.3: Real Embeddings & CLI Prototype (Planned)
-- Support for real embeddings as optional extras (e.g., OpenAI embeddings API, local `sentence-transformers`).
-- Better corpus tooling and management.
-- Optional CLI prototype for fast experimentation.
+### v0.3: Real Embeddings & CLI Prototype (Completed)
+- Support for real embeddings as optional extras (e.g., OpenAI embeddings API via `OpenAICompatibleEmbeddingProvider`).
+- `sentence-transformers` deferred to future sub-phase.
 
 ### v0.4: Production Vector Stores (Planned)
 - `generic-rag[chroma]`: Integration with ChromaDB.

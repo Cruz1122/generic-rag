@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "generic-rag"
-version = "0.6.0"
+version = "0.7.0"
 description = "Agnostic RAG and LLM orchestration library"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -12,6 +12,9 @@ dependencies = [
     "pydantic>=2.0",
     "httpx>=0.27.0",
 ]
+
+[project.scripts]
+generic-rag = "generic_rag.cli.main:main"
 
 [project.optional-dependencies]
 embeddings-openai = []

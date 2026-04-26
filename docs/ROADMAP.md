@@ -33,9 +33,12 @@
 - **FastAPI Support**: Optional extra `[fastapi]` for easy web API integration.
 - **Integration Guide**: `docs/ADAPTERS.md`.
 
-### v0.7.0: Optional CLI (Planned)
-- Lightweight CLI for testing pipelines.
-- Configuration management via ENV and YAML.
+### v0.7.0: CLI & Diagnostic Tools (Completed)
+- Lightweight `argparse` based CLI (`generic-rag` command).
+- `doctor` command for dependency diagnostics.
+- `inspect` command for document loader testing.
+- `demo offline` for zero-config pipeline validation.
+- `provider check-env` for security-aware configuration checking.
 
 ### v0.8.0: Optional Rerankers (Planned)
 - Rerankers (CrossEncoders) integration for better retrieval scoring.

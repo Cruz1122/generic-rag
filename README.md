@@ -8,12 +8,12 @@
 ![HTTPX](https://img.shields.io/badge/HTTPX-enabled-0B5FFF)
 ![Tests](https://img.shields.io/badge/tests-pytest-0A9EDC?logo=pytest&logoColor=white)
 ![Typing](https://img.shields.io/badge/typing-py.typed-blue)
-![Status](https://img.shields.io/badge/status-v0.6.0-green)
+![Status](https://img.shields.io/badge/status-v0.7.0-green)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
 ## What is generic-rag?
 
-`generic-rag` is a pure library of interfaces, Pydantic models, and contracts designed to build RAG pipelines and consume Large Language Models (OpenAI, Gemini, Groq, Ollama, etc.) **without coupling** to business rules, domain logic, or web frameworks (like FastAPI). It solves the problem of having LLM logic, specific prompts, and vector retrieval tightly coupled, allowing you to reuse the core infrastructure across multiple projects.
+`generic-rag` is a pure library of interfaces, Pydantic models, and contracts designed to build RAG pipelines and consume Large Language Models (OpenAI, Gemini, Groq, Ollama, etc.) **without coupling** to business rules, domain logic, or web frameworks (like FastAPI). It includes a lightweight **CLI** for diagnostics and local testing.
 
 ## What it is NOT
 
@@ -26,6 +26,7 @@
 
 - Strict Pydantic (v2) contracts for LLMs, Embeddings, Documents, and Chunks.
 - Abstract base interfaces for Providers, Dispatchers, Retrievers, ContextBuilders, and VectorStores.
+- **CLI**: Diagnostic (`doctor`), file inspection (`inspect`), and offline demo tools.
 - **LLM Providers**: Asynchronous implementations based on `httpx` for OpenAI-compatible (Groq, LMStudio, vLLM), Ollama, and Gemini REST API.
 - **Integration Adapters**: Clean patterns to connect your app (FastAPI, Service Layer) without core contamination. See [ADAPTERS.md](docs/ADAPTERS.md).
 - **Dispatcher**: Built-in lightweight retry logic and error mapping.
@@ -35,16 +36,17 @@
 - **Storage & Retrieval**: `InMemoryVectorStore` (default) and **Qdrant** (optional) support.
 - **Pipeline**: `DefaultQAPipeline` orchestrating retrieval, context injection, and LLM dispatching.
 
-## Current status: v0.6.0
+## Current status: v0.7.0
 
-We are currently at version **0.6.0**, which includes:
+We are currently at version **0.7.0**, which includes:
+- **CLI**: A new diagnostic and inspection toolset (`generic-rag` command).
 - **Integration Adapters**: Formalized patterns for connecting generic-rag to applications (FastAPI, Service Layer, DTO mapping).
 - **FastAPI Support**: Optional extra `[fastapi]` for easy web API integration.
 - **Optional PDF/HTML Loaders**: Lightweight extraction using PyMuPDF and BeautifulSoup via optional extras.
 - **Qdrant Integration**: External vector store support (`[qdrant]`).
 - Hardened LLM provider layer with `max_retries` and strict HTTP error mapping.
 - Support for structured output (JSON schema/object).
-- Full suite of **74 passing offline tests** including adapter examples.
+- Full suite of offline tests including adapter examples.
 
 ## Installation
 
@@ -59,7 +61,22 @@ cd generic-rag
 pip install -e .[dev]
 ```
 
-## Quickstart: offline demo
+## Quickstart: CLI
+
+The CLI is the easiest way to verify your environment and test loaders:
+
+```bash
+# Verify dependencies
+generic-rag doctor
+
+# Run an offline demo
+generic-rag demo offline
+
+# Inspect how a file is loaded into documents
+generic-rag inspect file README.md
+```
+
+## Quickstart: offline demo (Code)
 
 You can run a functional demo that runs entirely in memory without network requirements:
 

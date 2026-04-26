@@ -1,5 +1,16 @@
 # Release Notes
 
+## v0.7.0 (2026-04-26)
+
+**Focus: CLI and Diagnostic Tools**
+
+- **New CLI Interface**: Lightweight `argparse`-based CLI accessible via `generic-rag` command.
+- **Dependency Diagnostics**: `generic-rag doctor` to quickly check which extras and core dependencies are available.
+- **Document Inspection**: `generic-rag inspect file <path>` to test document loaders and view extracted metadata and content previews.
+- **Zero-Config Demo**: `generic-rag demo offline` to run a full RAG pipeline using in-memory components and a simulated LLM.
+- **Security-Aware Environment Checks**: `generic-rag provider check-env` to verify provider configuration without exposing secrets.
+- **Version bump**: Updated library version to 0.7.0.
+
 ## v0.6.0 (2026-04-26)
 
 **Focus: Integration Adapters and Application Patterns**

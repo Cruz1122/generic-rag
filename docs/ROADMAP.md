@@ -40,13 +40,14 @@
 - `demo offline` for zero-config pipeline validation.
 - `provider check-env` for security-aware configuration checking.
 
-### v0.8.0: Optional Rerankers (Planned)
-- Rerankers (CrossEncoders) integration for better retrieval scoring.
-- Hybrid search (BM25 + Vector) support.
+### v0.8.0: Optional Rerankers (Completed)
+- `BaseReranker` contract and `DeterministicReranker`.
+- `CrossEncoderReranker` via `sentence-transformers` as optional extra.
+- Integration into `DefaultQAPipeline`.
 
-### v0.9.0: Additional Optional Vector Stores (Planned)
-- `generic-rag[chroma]`: Integration with ChromaDB.
-- `generic-rag[faiss]`: Integration with FAISS.
+### v0.9.0: Hybrid Search & Advanced Retrieval (Planned)
+- Hybrid search (BM25 + Vector) support.
+- Additional optional vector stores (Chroma, FAISS).
 
 ### v1.0.0: API Stabilization (Planned)
 - Final contract review.

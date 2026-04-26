@@ -1,34 +1,27 @@
 # Release Notes
 
-## v0.7.0 (2026-04-26)
+## v0.8.0 - Reranking Support
 
-**Focus: CLI and Diagnostic Tools**
+### New Features
 
-- **New CLI Interface**: Lightweight `argparse`-based CLI accessible via `generic-rag` command.
-- **Dependency Diagnostics**: `generic-rag doctor` to quickly check which extras and core dependencies are available.
-- **Document Inspection**: `generic-rag inspect file <path>` to test document loaders and view extracted metadata and content previews.
-- **Zero-Config Demo**: `generic-rag demo offline` to run a full RAG pipeline using in-memory components and a simulated LLM.
-- **Security-Aware Environment Checks**: `generic-rag provider check-env` to verify provider configuration without exposing secrets.
-- **Version bump**: Updated library version to 0.7.0.
+- **Reranking Layer**: Introduced a new optional stage in the RAG pipeline after retrieval to reorder chunks for better accuracy.
+- **`BaseReranker`**: Abstract contract for implementing custom reranking strategies.
+- **`DeterministicReranker`**: A zero-dependency reranker based on keyword overlap. Perfect for testing and lightweight environments.
+- **`CrossEncoderReranker`**: Optional semantic reranker using `sentence-transformers`. Requires `pip install "generic-rag[rerankers]"`.
+- **Pipeline Integration**: `DefaultQAPipeline` now accepts an optional `reranker` in its constructor and automatically applies it if provided.
 
-## v0.6.0 (2026-04-26)
+### Internal Changes
 
-**Focus: Integration Adapters and Application Patterns**
+- Updated `ScoredChunk` to preserve original retrieval scores in `metadata["retrieval_score"]` when reranking.
+- Added `rerankers` optional dependency to `pyproject.toml`.
 
-- **Added Integration Examples**: New `examples/adapters/` directory showing how to use `generic-rag` in real-world scenarios without core contamination.
-    - `simple_domain_adapter.py`: Basic functional wrapper.
-    - `service_layer_adapter.py`: Service Layer pattern with custom DTOs.
-    - `fastapi_adapter_example.py`: Web API integration using dependency injection.
-- **FastAPI Support**: Added optional extra `fastapi` to `pyproject.toml`.
-- **New Documentation**: Created `docs/ADAPTERS.md` explaining integration best practices and anti-patterns.
-- **Tests**: Added comprehensive offline tests for all new adapter examples.
-- **Metadata Handling**: Examples demonstrate using metadata to pass domain-specific information through the pipeline.
+### Documentation
 
-## v0.5.0 (2026-04-20)
+- New guide: `docs/RERANKING.md`.
+- Updated API Reference and Roadmap.
 
-- Added Gemini REST provider.
-- Added support for structured output (JSON schema/object).
-- Added `OpenAICompatibleEmbeddingProvider`.
-- Added Qdrant vector store support as optional extra.
-- Added PDF and HTML loaders as optional extras.
-- Hardened LLM dispatcher with retry logic.
+## v0.7.0 - CLI & Diagnostic Tools
+
+- Added `generic-rag` CLI command.
+- Diagnostic and inspection tools.
+- Offline demo mode.

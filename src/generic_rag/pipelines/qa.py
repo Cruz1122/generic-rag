@@ -1,9 +1,10 @@
 from abc import ABC, abstractmethod
-from typing import List
+from typing import List, Optional
 from generic_rag.core.schemas import (
     PipelineRequest, PipelineResponse, LLMRequest, ChatMessage, ScoredChunk
 )
 from generic_rag.retrieval.base import BaseRetriever
+from generic_rag.reranking.base import BaseReranker
 from generic_rag.context.builder import BaseContextBuilder
 from generic_rag.llm.base import BaseLLMDispatcher
 from generic_rag.context.citations import build_citations
@@ -18,27 +19,37 @@ class DefaultQAPipeline(BaseQAPipeline):
         self, 
         retriever: BaseRetriever, 
         context_builder: BaseContextBuilder, 
-        dispatcher: BaseLLMDispatcher
+        dispatcher: BaseLLMDispatcher,
+        reranker: Optional[BaseReranker] = None
     ):
         self.retriever = retriever
         self.context_builder = context_builder
         self.dispatcher = dispatcher
+        self.reranker = reranker
 
     async def run(self, request: PipelineRequest) -> PipelineResponse:
         # 1. Retrieve chunks
         retrieval_response = await self.retriever.retrieve(request.retrieval)
         retrieved_chunks = retrieval_response.chunks
 
-        # 2. Build context
+        # 2. Rerank if available
+        if self.reranker and retrieved_chunks:
+            retrieved_chunks = await self.reranker.rerank(
+                query=request.query,
+                chunks=retrieved_chunks,
+                top_n=request.retrieval.top_k
+            )
+
+        # 3. Build context
         context_str = self.context_builder.build_context(
             chunks=retrieved_chunks,
             options=request.context_options
         )
 
-        # 3. Create a new LLMRequest to avoid mutating the original
+        # 4. Create a new LLMRequest to avoid mutating the original
         messages = list(request.llm.messages)
         
-        # 4. Inject context
+        # 5. Inject context
         prompt = (
             "Use the following retrieved context to answer the user query.\n"
             "If the context is insufficient, say so.\n\n"
@@ -61,13 +72,13 @@ class DefaultQAPipeline(BaseQAPipeline):
             metadata=request.llm.metadata
         )
 
-        # 5. Dispatch to LLM
+        # 6. Dispatch to LLM
         answer = await self.dispatcher.dispatch(llm_req)
 
-        # 6. Build citations
+        # 7. Build citations
         citations = build_citations(retrieved_chunks)
 
-        # 7. Return response
+        # 8. Return response
         return PipelineResponse(
             answer=answer,
             retrieved_chunks=retrieved_chunks,

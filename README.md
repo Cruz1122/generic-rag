@@ -8,7 +8,7 @@
 ![HTTPX](https://img.shields.io/badge/HTTPX-enabled-0B5FFF)
 ![Tests](https://img.shields.io/badge/tests-pytest-0A9EDC?logo=pytest&logoColor=white)
 ![Typing](https://img.shields.io/badge/typing-py.typed-blue)
-![Status](https://img.shields.io/badge/status-v0.7.0-green)
+![Status](https://img.shields.io/badge/status-v0.8.0-green)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
 ## What is generic-rag?
@@ -33,20 +33,18 @@
 - **Structured Output**: Native support for JSON modes and schema enforcement across providers.
 - **Ingestion**: Pure `TextDocumentLoader` and `MarkdownDocumentLoader`. Optional `PyMuPDFDocumentLoader` (`[pdf]`) and `HTMLDocumentLoader` (`[html]`).
 - **Chunking**: `CharacterChunker` with overlap support.
+- **Reranking**: `BaseReranker` contract with `DeterministicReranker` and optional `CrossEncoderReranker`.
 - **Storage & Retrieval**: `InMemoryVectorStore` (default) and **Qdrant** (optional) support.
-- **Pipeline**: `DefaultQAPipeline` orchestrating retrieval, context injection, and LLM dispatching.
+- **Pipeline**: `DefaultQAPipeline` orchestrating retrieval, reranking, context injection, and LLM dispatching.
 
-## Current status: v0.7.0
+## Current status: v0.8.0
 
-We are currently at version **0.7.0**, which includes:
-- **CLI**: A new diagnostic and inspection toolset (`generic-rag` command).
-- **Integration Adapters**: Formalized patterns for connecting generic-rag to applications (FastAPI, Service Layer, DTO mapping).
-- **FastAPI Support**: Optional extra `[fastapi]` for easy web API integration.
-- **Optional PDF/HTML Loaders**: Lightweight extraction using PyMuPDF and BeautifulSoup via optional extras.
-- **Qdrant Integration**: External vector store support (`[qdrant]`).
-- Hardened LLM provider layer with `max_retries` and strict HTTP error mapping.
-- Support for structured output (JSON schema/object).
-- Full suite of offline tests including adapter examples.
+We are currently at version **0.8.0**, which includes:
+- **Reranking Support**: New optional reranking layer for RAG pipelines.
+- **Deterministic Reranker**: Lightweight keyword-based reordering for tests and demos.
+- **Cross-Encoder Reranker**: Optional semantic reranking using `sentence-transformers` via `[rerankers]` extra.
+- **Pipeline Integration**: `DefaultQAPipeline` now supports optional rerankers.
+- **CLI**: Diagnostic (`doctor`), file inspection (`inspect`), and offline demo tools.
 
 ## Installation
 

@@ -13,6 +13,7 @@ def doctor_handler() -> int:
         "pdf": "fitz",
         "html": "bs4",
         "fastapi": "fastapi",
+        "rerankers": "sentence_transformers",
     }
 
     for label, package in dependencies.items():

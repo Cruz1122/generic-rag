@@ -1,6 +1,6 @@
 # API Reference
 
-This is a high-level reference for the core components and schemas of `generic-rag` v0.5.
+This is a high-level reference for the core components and schemas of `generic-rag` v0.8.0.
  For deep implementation details, please inspect the `src/generic_rag/` source code.
 
 ## Core Schemas (`generic_rag.core.schemas`)
@@ -41,6 +41,12 @@ All core data structures inherit from Pydantic `BaseModel` with `extra="forbid"`
 - **`BaseVectorStore`**: Abstract base class requiring `index_chunks` and `search`.
 - **`BaseRetriever`**: Abstract base class requiring `retrieve`.
 
+## Reranking (`generic_rag.reranking`)
+
+- **`BaseReranker`**: Abstract base class requiring async `rerank(query, chunks, top_n)`.
+- **`DeterministicReranker`**: Keyword-overlap based reordering.
+- **`CrossEncoderReranker`**: Semantic reranking using `sentence-transformers` (optional via `[rerankers]`).
+
 ## Exceptions (`generic_rag.core.exceptions`)
 
 All exceptions inherit from `GenericRagError`. The LLM layer specifically throws:
@@ -58,3 +64,4 @@ All exceptions inherit from `GenericRagError`. The LLM layer specifically throws
 - **Ingestion**: `TextDocumentLoader`, `MarkdownDocumentLoader`, `PyMuPDFDocumentLoader` (via `[pdf]`), `HTMLDocumentLoader` (via `[html]`).
 - **Chunking**: `CharacterChunker`.
 - **Retrieval**: `SimpleRetriever`.
+- **Reranking**: `DeterministicReranker`, `CrossEncoderReranker` (optional).

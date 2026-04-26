@@ -6,7 +6,7 @@ from pydantic import BaseModel, ConfigDict, Field
 class SourceRef(BaseModel):
     model_config = ConfigDict(extra="forbid")
     source_id: str
-    source_type: Literal["pdf", "markdown", "txt", "json", "web", "other"]
+    source_type: Literal["pdf", "markdown", "txt", "json", "web", "html", "other"]
     title: Optional[str] = None
     uri: Optional[str] = Field(default=None, description="URL o path al archivo")
     page: Optional[int] = None

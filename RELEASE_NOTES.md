@@ -1,4 +1,15 @@
-﻿# v0.1.0 release notes
+# v0.5.0 release notes
+
+Added optional advanced loaders for PDF and HTML, maintaining the core lightweight and free of heavy dependencies.
+
+Includes:
+- `PyMuPDFDocumentLoader` (via `pip install ".[pdf]"`)
+- `HTMLDocumentLoader` (via `pip install ".[html]"`)
+- Added `"html"` type to `SourceRef.source_type` schema.
+- Added `docs/DOCUMENT_LOADERS.md` documentation.
+- Examples for both PDF and HTML loaders.
+
+# v0.1.0 release notes
 
 Initial generic RAG MVP.
 

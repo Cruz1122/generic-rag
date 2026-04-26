@@ -8,7 +8,7 @@
 ![HTTPX](https://img.shields.io/badge/HTTPX-enabled-0B5FFF)
 ![Tests](https://img.shields.io/badge/tests-pytest-0A9EDC?logo=pytest&logoColor=white)
 ![Typing](https://img.shields.io/badge/typing-py.typed-blue)
-![Status](https://img.shields.io/badge/status-v0.4-green)
+![Status](https://img.shields.io/badge/status-v0.5-green)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
 ## What is generic-rag?
@@ -17,7 +17,7 @@
 
 ## What it is NOT
 
-- It does not include heavy document loaders (PyMuPDF, OCR) by default.
+- It does not include heavy document loaders by default (PyMuPDF and BeautifulSoup are optional).
 - It does not use heavy semantic embeddings (like Sentence Transformers) out of the box.
 - It does not rely on bloated SDKs (LangChain, LlamaIndex).
 - It is not a web API or a ready-to-deploy web application.
@@ -29,14 +29,15 @@
 - **LLM Providers**: Asynchronous implementations based on `httpx` for OpenAI-compatible (Groq, LMStudio, vLLM), Ollama, and Gemini REST API.
 - **Dispatcher**: Built-in lightweight retry logic and error mapping.
 - **Structured Output**: Native support for JSON modes and schema enforcement across providers.
-- **Ingestion**: Pure `TextDocumentLoader` and `MarkdownDocumentLoader`.
+- **Ingestion**: Pure `TextDocumentLoader` and `MarkdownDocumentLoader`. Optional `PyMuPDFDocumentLoader` (`[pdf]`) and `HTMLDocumentLoader` (`[html]`).
 - **Chunking**: `CharacterChunker` with overlap support.
 - **Storage & Retrieval**: `InMemoryVectorStore` (default) and **Qdrant** (optional) support.
 - **Pipeline**: `DefaultQAPipeline` orchestrating retrieval, context injection, and LLM dispatching.
 
-## Current status: v0.4
+## Current status: v0.5
 
-We are currently at version **0.4**, which includes:
+We are currently at version **0.5**, which includes:
+- **Optional PDF/HTML Loaders**: Lightweight extraction using PyMuPDF and BeautifulSoup via optional extras.
 - **Qdrant Integration**: First external vector store support as an optional extra (`[qdrant]`).
 - Optional real semantic embeddings (`OpenAICompatibleEmbeddingProvider`).
 - Hardened LLM provider layer with `max_retries` and strict HTTP error mapping.

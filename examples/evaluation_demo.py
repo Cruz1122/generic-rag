@@ -1,6 +1,5 @@
 """
-Evaluation Demo for generic-rag v0.9.0.
-Shows how to perform offline deterministic evaluation using materialized predictions.
+Evaluation Demo for generic-rag v1.0.0.
 """
 from generic_rag.evaluation import (
     EvaluationDataset, 

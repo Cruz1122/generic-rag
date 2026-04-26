@@ -1,7 +1,9 @@
 # API Reference
 
-This is a high-level reference for the core components and schemas of `generic-rag` v0.9.0.
- For deep implementation details, please inspect the `src/generic_rag/` source code.
+This is a high-level reference for the core components and schemas of `generic-rag` v1.0.0.
+
+## Stability Note
+As of v1.0.0, the APIs listed below are classified according to our [Compatibility Policy](../docs/COMPATIBILITY.md). Core schemas and interfaces are considered **Stable Public API**.
 
 ## Core Schemas (`generic_rag.core.schemas`)
 

@@ -8,44 +8,26 @@
 ![HTTPX](https://img.shields.io/badge/HTTPX-enabled-0B5FFF)
 ![Tests](https://img.shields.io/badge/tests-pytest-0A9EDC?logo=pytest&logoColor=white)
 ![Typing](https://img.shields.io/badge/typing-py.typed-blue)
-![Status](https://img.shields.io/badge/status-v0.9.0-green)
+![Status](https://img.shields.io/badge/status-v1.0.0-green)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
 ## What is generic-rag?
 
 `generic-rag` is a pure library of interfaces, Pydantic models, and contracts designed to build RAG pipelines and consume Large Language Models (OpenAI, Gemini, Groq, Ollama, etc.) **without coupling** to business rules, domain logic, or web frameworks (like FastAPI). It includes a lightweight **CLI** for diagnostics, local testing and evaluation.
 
-## What it is NOT
+## Stable API
 
-- It does not include heavy document loaders by default (PyMuPDF and BeautifulSoup are optional).
-- It does not use heavy semantic embeddings (like Sentence Transformers) out of the box.
-- It does not rely on bloated SDKs (LangChain, LlamaIndex).
-- It is not a web API or a ready-to-deploy web application.
+As of version **1.0.0**, `generic-rag` adheres to strict **Semantic Versioning (SemVer)**. We have defined a [Compatibility Policy](docs/COMPATIBILITY.md) that guarantees stability for our core API and schemas.
 
-## Features
+## Current status: v1.0.0 (Stable)
 
-- Strict Pydantic (v2) contracts for LLMs, Embeddings, Documents, and Chunks.
-- Abstract base interfaces for Providers, Dispatchers, Retrievers, ContextBuilders, and VectorStores.
-- **CLI**: Diagnostic (`doctor`), file inspection (`inspect`), and offline demo tools.
-- **LLM Providers**: Asynchronous implementations based on `httpx` for OpenAI-compatible (Groq, LMStudio, vLLM), Ollama, and Gemini REST API.
-- **Integration Adapters**: Clean patterns to connect your app (FastAPI, Service Layer) without core contamination. See [ADAPTERS.md](docs/ADAPTERS.md).
-- **Dispatcher**: Built-in lightweight retry logic and error mapping.
-- **Structured Output**: Native support for JSON modes and schema enforcement across providers.
-- **Ingestion**: Pure `TextDocumentLoader` and `MarkdownDocumentLoader`. Optional `PyMuPDFDocumentLoader` (`[pdf]`) and `HTMLDocumentLoader` (`[html]`).
-- **Chunking**: `CharacterChunker` with overlap support.
-- **Reranking**: `BaseReranker` contract with `DeterministicReranker` and optional `CrossEncoderReranker`.
-- **Storage & Retrieval**: `InMemoryVectorStore` (default) and **Qdrant** (optional) support.
-- **Evaluation**: Deterministic, offline quality harness for retrieval and reranking.
-- **Pipeline**: `DefaultQAPipeline` orchestrating retrieval, reranking, context injection, and LLM dispatching.
+We have reached our first major stable milestone:
+- **API Stabilization**: Core interfaces and schemas are frozen.
+- **Evaluation & Quality Harness**: Production-grade tools to measure RAG performance.
+- **Comprehensive Documentation**: Detailed guides for every component.
+- **CI/CD**: Automated testing across multiple Python versions.
 
-## Current status: v0.9.0
-
-We are currently at version **0.9.0**, which includes:
-- **Evaluation & Quality Harness**: New offline framework to measure RAG performance (Precision@k, Recall@k, HitRate, MRR, nDCG) using materialized predictions.
-- **CLI Eval**: New `eval retrieval` command to evaluate performance from the command line.
-- **Reranking Support**: Optional reranking layer for RAG pipelines.
-- **Deterministic Reranker**: Lightweight keyword-based reordering for tests and demos.
-- **Cross-Encoder Reranker**: Optional semantic reranking using `sentence-transformers` via `[rerankers]` extra.
+For a detailed list of changes, see the [CHANGELOG](CHANGELOG.md).
 
 ## Installation
 

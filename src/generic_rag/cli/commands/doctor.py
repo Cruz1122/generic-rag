@@ -1,5 +1,5 @@
 import sys
-from importlib.util import find_spec
+from generic_rag.core.optional import is_optional_dependency_available
 
 def doctor_handler() -> int:
     print("core: ok")
@@ -17,17 +17,9 @@ def doctor_handler() -> int:
     }
 
     for label, package in dependencies.items():
-        found = False
-        try:
-            # Check if it's already loaded (common in tests with mocks)
-            if package in sys.modules:
-                found = True
-            else:
-                found = find_spec(package) is not None
-        except (ValueError, ImportError):
-            found = False
-            
-        if found:
+        # Note: we prioritize checking if it's already in sys.modules 
+        # to support testing with mocks easily.
+        if package in sys.modules or is_optional_dependency_available(package):
             print(f"{label}: ok")
         else:
             print(f"{label}: not installed")

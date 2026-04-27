@@ -31,8 +31,9 @@ Extracts text from PDF files using `PyMuPDF` (`fitz`).
 
 **Installation:**
 ```bash
-pip install -e ".[pdf]"
+pip install "generic-rag[pdf]"
 ```
+Note: If the extra is not installed, instantiating the loader will raise a `ConfigurationError`.
 
 **Usage:**
 ```python
@@ -52,8 +53,9 @@ Extracts and cleans text from HTML content using `BeautifulSoup4`.
 
 **Installation:**
 ```bash
-pip install -e ".[html]"
+pip install "generic-rag[html]"
 ```
+Note: If the extra is not installed, instantiating the loader will raise a `ConfigurationError`.
 
 **Usage:**
 ```python

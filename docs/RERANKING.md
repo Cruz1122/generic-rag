@@ -41,6 +41,7 @@ Requiere la dependencia opcional `rerankers`:
 ```bash
 pip install "generic-rag[rerankers]"
 ```
+Note: If the extra is not installed, using the reranker will raise a `ConfigurationError`.
 
 #### Uso
 

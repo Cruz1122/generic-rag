@@ -1,17 +1,18 @@
 import uuid
-from typing import Any, Dict, List, Optional, Union, TYPE_CHECKING
+from typing import Any, Dict, List, Optional, Union
 
 try:
     from qdrant_client import AsyncQdrantClient
     from qdrant_client.http import models
 except ImportError:
-    # Estas dependencias son opcionales
+    # Estas dependencias son opcionales para importar el módulo
     AsyncQdrantClient = Any  # type: ignore
     models = Any  # type: ignore
 
 from generic_rag.core.schemas import Chunk, ScoredChunk, SourceRef
 from generic_rag.storage.base import BaseVectorStore
 from generic_rag.core.exceptions import StorageError, ConfigurationError, InvalidResponseError
+from generic_rag.core.optional import require_optional_dependency
 
 # Namespace interno determinístico para generic-rag
 QDRANT_NAMESPACE = uuid.uuid5(uuid.NAMESPACE_URL, "https://generic-rag.local/qdrant")
@@ -19,7 +20,7 @@ QDRANT_NAMESPACE = uuid.uuid5(uuid.NAMESPACE_URL, "https://generic-rag.local/qdr
 class QdrantVectorStore(BaseVectorStore):
     """
     Vector Store basado en Qdrant con soporte asíncrono.
-    Requiere: pip install generic-rag[qdrant]
+    Requiere: pip install "generic-rag[qdrant]"
     """
 
     def __init__(
@@ -29,6 +30,8 @@ class QdrantVectorStore(BaseVectorStore):
         vector_size: int,
         distance: str = "Cosine",
     ) -> None:
+        require_optional_dependency("qdrant_client", "qdrant", "qdrant-client")
+        
         if not collection_name:
             raise ConfigurationError("collection_name cannot be empty")
         if vector_size <= 0:
@@ -39,10 +42,6 @@ class QdrantVectorStore(BaseVectorStore):
         self.vector_size = vector_size
         
         # Mapeo de distancias
-        # Solo intentamos acceder a models si no es Any
-        if models is Any:
-            raise ImportError("qdrant-client is not installed. Install it with pip install generic-rag[qdrant]")
-
         distance_map = {
             "Cosine": models.Distance.COSINE,
             "Dot": models.Distance.DOT,

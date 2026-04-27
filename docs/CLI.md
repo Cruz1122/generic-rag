@@ -35,6 +35,7 @@ qdrant: not installed
 pdf: ok
 html: ok
 fastapi: not installed
+rerankers: not installed
 ```
 
 ### `demo offline`

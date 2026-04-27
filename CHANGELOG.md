@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-04-26
+
+### Added
+- Reusable `optional` dependency helper in `core`.
+- Improved guards and error messages for optional extras (`qdrant`, `pdf`, `html`, `rerankers`).
+- Specific `ConfigurationError` when an optional component is used without its required extra.
+
+### Changed
+- Refactored `doctor` command to use the new dependency helper.
+- Standardized error messages for missing optional dependencies.
+- Improved documentation regarding optional integrations and error handling.
+
 ## [1.0.0] - 2026-04-26
 
 ### Added

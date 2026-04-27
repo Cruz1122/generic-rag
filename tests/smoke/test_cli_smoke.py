@@ -6,7 +6,7 @@ def test_cli_version(capsys):
     code = main(["--version"])
     assert code == 0
     captured = capsys.readouterr()
-    assert "1.0.0" in captured.out
+    assert "1.0.1" in captured.out
 
 def test_cli_help(capsys):
     """Verify 'generic-rag --help' returns success and usage instructions."""

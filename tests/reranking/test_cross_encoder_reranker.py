@@ -20,12 +20,12 @@ def sample_chunks():
     ]
 
 def test_cross_encoder_missing_dependency():
-    # Force ImportError
-    with patch.dict(sys.modules, {'sentence_transformers': None}):
+    # Force ImportError/Availability failure
+    with patch("generic_rag.core.optional.is_optional_dependency_available", return_value=False):
         reranker = CrossEncoderReranker(model_name="test-model")
         with pytest.raises(ConfigurationError) as excinfo:
             reranker._get_model()
-        assert "sentence-transformers is required" in str(excinfo.value)
+        assert "Optional dependency 'sentence-transformers' is required" in str(excinfo.value)
 
 @pytest.mark.asyncio
 async def test_cross_encoder_rerank_success(sample_chunks):
@@ -33,20 +33,21 @@ async def test_cross_encoder_rerank_success(sample_chunks):
     mock_model.predict.return_value = [0.1, 0.9] # c1 -> 0.1, c2 -> 0.9
     
     mock_st = MagicMock()
-    with patch.dict(sys.modules, {'sentence_transformers': mock_st}):
-        mock_st.CrossEncoder.return_value = mock_model
-        reranker = CrossEncoderReranker(model_name="test-model")
-        results = await reranker.rerank("query", sample_chunks)
-        
-        assert len(results) == 2
-        assert results[0].id == "c2" # Highest score
-        assert results[0].score == 0.9
-        assert results[0].metadata["retrieval_score"] == 0.8
-        assert results[0].metadata["rerank_score"] == 0.9
-        assert results[0].metadata["reranker"] == "test-model"
-        
-        assert results[1].id == "c1"
-        assert results[1].score == 0.1
+    with patch("generic_rag.core.optional.is_optional_dependency_available", return_value=True):
+        with patch.dict(sys.modules, {'sentence_transformers': mock_st}):
+            mock_st.CrossEncoder.return_value = mock_model
+            reranker = CrossEncoderReranker(model_name="test-model")
+            results = await reranker.rerank("query", sample_chunks)
+            
+            assert len(results) == 2
+            assert results[0].id == "c2" # Highest score
+            assert results[0].score == 0.9
+            assert results[0].metadata["retrieval_score"] == 0.8
+            assert results[0].metadata["rerank_score"] == 0.9
+            assert results[0].metadata["reranker"] == "test-model"
+            
+            assert results[1].id == "c1"
+            assert results[1].score == 0.1
 
 @pytest.mark.asyncio
 async def test_cross_encoder_score_mismatch(sample_chunks):
@@ -54,11 +55,12 @@ async def test_cross_encoder_score_mismatch(sample_chunks):
     mock_model.predict.return_value = [0.5] # Only one score for two chunks
     
     mock_st = MagicMock()
-    with patch.dict(sys.modules, {'sentence_transformers': mock_st}):
-        mock_st.CrossEncoder.return_value = mock_model
-        reranker = CrossEncoderReranker(model_name="test-model")
-        with pytest.raises(InvalidResponseError):
-            await reranker.rerank("query", sample_chunks)
+    with patch("generic_rag.core.optional.is_optional_dependency_available", return_value=True):
+        with patch.dict(sys.modules, {'sentence_transformers': mock_st}):
+            mock_st.CrossEncoder.return_value = mock_model
+            reranker = CrossEncoderReranker(model_name="test-model")
+            with pytest.raises(InvalidResponseError):
+                await reranker.rerank("query", sample_chunks)
 
 @pytest.mark.asyncio
 async def test_cross_encoder_empty_chunks():

@@ -5,26 +5,18 @@ from typing import List, Union, Any
 from generic_rag.core.schemas import Document, SourceRef
 from generic_rag.core.exceptions import DocumentLoadError
 from generic_rag.ingestion.base import BaseDocumentLoader
-
-try:
-    from bs4 import BeautifulSoup
-    HAS_BS4 = True
-except ImportError:
-    HAS_BS4 = False
+from generic_rag.core.optional import require_optional_dependency
 
 class HTMLDocumentLoader(BaseDocumentLoader):
     """Cargador de documentos HTML usando BeautifulSoup."""
 
     def __init__(self) -> None:
-        if not HAS_BS4:
-            raise ImportError(
-                "BeautifulSoup no está instalado. "
-                "Por favor, instala generic-rag con el extra de html: "
-                "pip install -e \".[html]\""
-            )
+        require_optional_dependency("bs4", "html", "beautifulsoup4")
 
     async def load(self, source: Union[str, pathlib.Path, bytes], encoding: str = "utf-8", **kwargs: Any) -> List[Document]:
         """Carga un documento HTML desde un path local, string o bytes."""
+        from bs4 import BeautifulSoup # type: ignore
+        
         if isinstance(source, pathlib.Path):
             source = str(source)
 

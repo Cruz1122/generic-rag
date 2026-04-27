@@ -85,4 +85,8 @@ When we plan to remove or change a Stable Public API, we will:
 
 ## Optional Integrations
 
-`generic-rag` uses "extras" for heavy or specific dependencies (e.g., `[qdrant]`, `[pdf]`). Compatibility for these depends on the underlying third-party library. If a third-party library introduces a breaking change, we may be forced to release a minor version of `generic-rag` with updated integration code.
+`generic-rag` uses "extras" for heavy or specific dependencies (e.g., `[qdrant]`, `[pdf]`). 
+
+Modules providing optional integrations (e.g., `generic_rag.storage.qdrant`) are designed to be importable even if the corresponding extra is not installed. However, attempting to instantiate or use classes within these modules will raise a `generic_rag.core.exceptions.ConfigurationError` with clear instructions on how to install the required extra.
+
+Compatibility for these depends on the underlying third-party library. If a third-party library introduces a breaking change, we may be forced to release a minor version of `generic-rag` with updated integration code.

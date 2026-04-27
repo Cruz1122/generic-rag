@@ -5,26 +5,18 @@ from typing import List, Union, Any
 from generic_rag.core.schemas import Document, SourceRef
 from generic_rag.core.exceptions import DocumentLoadError
 from generic_rag.ingestion.base import BaseDocumentLoader
-
-try:
-    import fitz  # type: ignore
-    HAS_FITZ = True
-except ImportError:
-    HAS_FITZ = False
+from generic_rag.core.optional import require_optional_dependency
 
 class PyMuPDFDocumentLoader(BaseDocumentLoader):
     """Cargador de documentos PDF usando PyMuPDF (fitz)."""
 
     def __init__(self) -> None:
-        if not HAS_FITZ:
-            raise ImportError(
-                "PyMuPDF no está instalado. "
-                "Por favor, instala generic-rag con el extra de pdf: "
-                "pip install -e \".[pdf]\""
-            )
+        require_optional_dependency("fitz", "pdf", "PyMuPDF")
 
     async def load(self, source: Union[str, pathlib.Path, bytes], **kwargs: Any) -> List[Document]:
         """Carga un documento PDF desde un path local o bytestream."""
+        import fitz # type: ignore
+        
         if isinstance(source, pathlib.Path):
             source = str(source)
 

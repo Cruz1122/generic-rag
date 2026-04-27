@@ -2,6 +2,7 @@ from typing import List, Optional, Any
 from generic_rag.core.schemas import ScoredChunk
 from generic_rag.reranking.base import BaseReranker
 from generic_rag.core.exceptions import ConfigurationError, InvalidResponseError
+from generic_rag.core.optional import require_optional_dependency
 
 class CrossEncoderReranker(BaseReranker):
     """
@@ -16,12 +17,8 @@ class CrossEncoderReranker(BaseReranker):
 
     def _get_model(self) -> Any:
         if self._model is None:
-            try:
-                from sentence_transformers import CrossEncoder
-            except ImportError:
-                raise ConfigurationError(
-                    "sentence-transformers is required. Install with: pip install -e \".[rerankers]\""
-                )
+            require_optional_dependency("sentence_transformers", "rerankers", "sentence-transformers")
+            from sentence_transformers import CrossEncoder # type: ignore
             self._model = CrossEncoder(self.model_name, **self.model_kwargs)
         return self._model
 

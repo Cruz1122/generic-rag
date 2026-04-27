@@ -22,6 +22,11 @@ from generic_rag.storage.qdrant import QdrantVectorStore
 from generic_rag.core.schemas import Chunk, SourceRef, ScoredChunk
 from generic_rag.core.exceptions import StorageError, ConfigurationError, InvalidResponseError
 
+@pytest.fixture(autouse=True)
+def mock_optional_dependency():
+    with patch("generic_rag.core.optional.is_optional_dependency_available", return_value=True):
+        yield
+
 @pytest.fixture
 def models_ref():
     return mock_models

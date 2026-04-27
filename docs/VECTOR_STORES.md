@@ -30,8 +30,9 @@ Primer vector store externo soportado. Utiliza el cliente oficial asíncrono de 
 ### Instalación
 
 ```bash
-pip install generic-rag[qdrant]
+pip install "generic-rag[qdrant]"
 ```
+Note: If the extra is not installed, instantiating the vector store will raise a `ConfigurationError`.
 
 ### Uso
 
